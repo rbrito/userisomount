@@ -19,7 +19,6 @@ case "$1" in
 		#specify the name of the icon if you wish to change it
 		echo -e "\
 			[Desktop Entry]\n\
-			Encoding=UTF-8\n\
 			Name=$FILE\n\
 			Comment=$FILE mounted at $MOUNTPOINT\n\
 			Type=Link\n\
