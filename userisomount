@@ -32,7 +32,7 @@ case "$1" in
 	;;
 	umount | unmount)
 		FILE=$(basename "$2" .desktop)
-		MOUNTPOINT="$MOUNTDIR/$FILE"		
+		MOUNTPOINT="$MOUNTDIR/$FILE"
 
 		#Unmount the file system
 		fusermount -u "$MOUNTPOINT"
@@ -47,31 +47,31 @@ case "$1" in
 		rm $HOME/Desktop/$FILE.desktop
 	;;
 	clean)
-		#if any mountpoints exist in the mount directory 
+		#if any mountpoints exist in the mount directory
 		if find $MOUNTDIR/* -maxdepth 0 > /dev/null
 		then
-			#For each mountpoint in the mount directory	
+			#For each mountpoint in the mount directory
 			for MOUNTS in $MOUNTDIR/*
 				do
 				FILE=$(basename "$MOUNTS")
-		
+
 				#Unmount the filesystem if it's mounted
 				fusermount -u "$MOUNTS"
-		
+
 				#Remove the bookmark if it exists
 				sed -i "\,file://$MOUNTS,d" $HOME/.gtk-bookmarks
 
-				#Remove the mountpoint		
+				#Remove the mountpoint
 				rmdir "$MOUNTS"
-		
+
 				#Remove the desktop icon if it exists
 				if [ -e $HOME/Desktop/$FILE.desktop ]
 				then
 					rm $HOME/Desktop/$FILE.desktop
-				fi	
+				fi
 			done
 		fi
-	;;	
+	;;
 	*)
 		echo "Syntax:"
 		echo "	Mount a filesystem image: "
@@ -84,7 +84,7 @@ case "$1" in
 		echo "The script is intended to be called using the nautilus-actions plugin"
 		echo "for mounting and unmounting .iso, .img, .bin, .mdf, and .nrg disk images"
 		echo "from within the gnome desktop environment."
-		echo 
+		echo
 		echo "The clean option should be made to run on startup to clean-up any"
 		echo "changes left over after a system restart."
 	;;
