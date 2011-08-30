@@ -17,13 +17,12 @@ case "$1" in
 		#Create a .desktop entry file on the user's desktop
 		#that points to the mounted filesystem
 		#specify the name of the icon if you wish to change it
-		echo -e "\
-			[Desktop Entry]\n\
+		printf "[Desktop Entry]\n\
 			Name=$FILE\n\
 			Comment=$FILE mounted at $MOUNTPOINT\n\
 			Type=Link\n\
 			Icon=$USEICON\n\
-			URL=$MOUNTPOINT"\
+			URL=$MOUNTPOINT" \
 		> $HOME/Desktop/$FILE.desktop
 
 		#Create a gtk bookmark so that the mount appears in the
