@@ -1,5 +1,15 @@
-userisomount (0.0.0-1) unstable; urgency=low
+userisomount (0.0.0-1) UNRELEASED; urgency=low
 
   * Initial release.
+  * [05a754f] Add schemas from the blog.
+  * [3c56973] Remove implementation-specific extension.
+  * [c58c711] userisomount: Remove encoding key in the created .desktop file.
+  * [9286d70] userisomount: Remove old-style backticks with more readable $().
+  * [9ae5abe] userisomount: Remove trailing whitespace.
+  * [430f3cc] userisomount: Don't use a hardcoded name for the script.
+  * [4f82e2c] userisomount: Use printf to get rid of a bashism.
+  * [9ef112e] Don't make the schemas have a hardcode path under /usr/local.
+  * [80e7c4f] Change the permissions of the script.
+  * [b005acb] Create a barebones debian packaging.
 
- -- Rogério Brito <rbrito@ime.usp.br>  Tue, 30 Aug 2011 01:43:35 -0300
+ -- Rogério Brito <rbrito@ime.usp.br>  Tue, 30 Aug 2011 01:53:21 -0300
