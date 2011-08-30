@@ -1,0 +1,18 @@
+Source: userisomount
+Section: utils
+Priority: extra
+Maintainer: Rogério Brito <rbrito@ime.usp.br>
+Build-Depends: debhelper (>= 8)
+Standards-Version: 3.9.2
+Homepage: http://maketecheasier.com/mount-iso-bin-and-cue-files-from-nautilus/2009/05/23
+
+Package: userisomount
+Architecture: all
+Depends: fuseiso, nautilus-actions (<< 3), ${misc:Depends}
+Description: mount ISO images right from nautilus
+ The easy way to mount an iso, bin or cue file in Linux without having to
+ hit the terminal every time.
+ .
+ With the use of fuesiso and nautilus-actions, we can easily create an option
+ in Nautilus to mount the CD images right from the context menu (mouse right
+ click).
