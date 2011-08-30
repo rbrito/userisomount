@@ -76,11 +76,11 @@ case "$1" in
 	*)
 		echo "Syntax:"
 		echo "	Mount a filesystem image: "
-		echo "		./userisomount.sh mount filename"
+		echo "		./userisomount mount filename"
 		echo "	Unmount a filesystem image: "
-		echo "		./userisomount.sh umount ~/Desktop/filename.desktop"
+		echo "		./userisomount umount ~/Desktop/filename.desktop"
 		echo "	Clean up mounts, eg. after a system restart or crash:"
-		echo "		./userisomount.sh clean"
+		echo "		./userisomount clean"
 		echo
 		echo "The script is intended to be called using the nautilus-actions plugin"
 		echo "for mounting and unmounting .iso, .img, .bin, .mdf, and .nrg disk images"
