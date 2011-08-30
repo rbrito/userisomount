@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 
 MOUNTDIR="$HOME/.mymounts"
 USEICON="gnome-dev-removable"
@@ -75,11 +75,11 @@ case "$1" in
 	*)
 		echo "Syntax:"
 		echo "	Mount a filesystem image: "
-		echo "		./userisomount mount filename"
+		echo "		$0 mount filename"
 		echo "	Unmount a filesystem image: "
-		echo "		./userisomount umount ~/Desktop/filename.desktop"
+		echo "		$0 umount ~/Desktop/filename.desktop"
 		echo "	Clean up mounts, eg. after a system restart or crash:"
-		echo "		./userisomount clean"
+		echo "		$0 clean"
 		echo
 		echo "The script is intended to be called using the nautilus-actions plugin"
 		echo "for mounting and unmounting .iso, .img, .bin, .mdf, and .nrg disk images"
