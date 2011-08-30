@@ -1,0 +1,92 @@
+#! /bin/bash
+
+MOUNTDIR="$HOME/.mymounts"
+USEICON="gnome-dev-removable"
+
+case "$1" in
+	mount)
+		FILE=`basename "$2"`		
+		MOUNTPOINT="$MOUNTDIR/$FILE"
+
+		#Create the mountpoint and any parent directories necessary
+		mkdir -p "$MOUNTPOINT"
+
+		#Mount the file at the mountpoint
+		fuseiso "$2" "$MOUNTPOINT"
+
+		#Create a .desktop entry file on the user's desktop
+		#that points to the mounted filesystem
+		#specify the name of the icon if you wish to change it
+		echo -e "\
+			[Desktop Entry]\n\
+			Encoding=UTF-8\n\
+			Name=$FILE\n\
+			Comment=$FILE mounted at $MOUNTPOINT\n\
+			Type=Link\n\
+			Icon=$USEICON\n\
+			URL=$MOUNTPOINT"\
+		> $HOME/Desktop/$FILE.desktop
+
+		#Create a gtk bookmark so that the mount appears in the
+		#places panel and menu.
+		echo "file://$MOUNTPOINT" >> $HOME/.gtk-bookmarks
+	;;
+	umount | unmount)
+		FILE=`basename "$2" .desktop`
+		MOUNTPOINT="$MOUNTDIR/$FILE"		
+
+		#Unmount the file system
+		fusermount -u "$MOUNTPOINT"
+
+		#Remove the gtk bookmark
+		sed -i "\,file://$MOUNTPOINT,d" $HOME/.gtk-bookmarks
+
+		#Remove the mountpoint
+		rmdir "$MOUNTPOINT"
+
+		#Remove the desktop icon
+		rm $HOME/Desktop/$FILE.desktop
+	;;
+	clean)
+		#if any mountpoints exist in the mount directory 
+		if find $MOUNTDIR/* -maxdepth 0 > /dev/null
+		then
+			#For each mountpoint in the mount directory	
+			for MOUNTS in $MOUNTDIR/*
+				do
+				FILE=`basename "$MOUNTS"`
+		
+				#Unmount the filesystem if it's mounted
+				fusermount -u "$MOUNTS"
+		
+				#Remove the bookmark if it exists
+				sed -i "\,file://$MOUNTS,d" $HOME/.gtk-bookmarks
+
+				#Remove the mountpoint		
+				rmdir "$MOUNTS"
+		
+				#Remove the desktop icon if it exists
+				if [ -e $HOME/Desktop/$FILE.desktop ]
+				then
+					rm $HOME/Desktop/$FILE.desktop
+				fi	
+			done
+		fi
+	;;	
+	*)
+		echo "Syntax:"
+		echo "	Mount a filesystem image: "
+		echo "		./userisomount.sh mount filename"
+		echo "	Unmount a filesystem image: "
+		echo "		./userisomount.sh umount ~/Desktop/filename.desktop"
+		echo "	Clean up mounts, eg. after a system restart or crash:"
+		echo "		./userisomount.sh clean"
+		echo
+		echo "The script is intended to be called using the nautilus-actions plugin"
+		echo "for mounting and unmounting .iso, .img, .bin, .mdf, and .nrg disk images"
+		echo "from within the gnome desktop environment."
+		echo 
+		echo "The clean option should be made to run on startup to clean-up any"
+		echo "changes left over after a system restart."
+	;;
+esac
